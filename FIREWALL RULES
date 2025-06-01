@@ -1,1 +1,113 @@
+✅ 1. Open UFW (via Terminal)
+UFW (Uncomplicated Firewall) is a command-line tool.
+sudo ufw status verbose
+If inactive:
+sudo ufw enable
+✅ 2. List Current Firewall Rules
+sudo ufw status numbered
+✅ 3. Add Rule to Block Inbound Port 23 (Telnet)
+sudo ufw deny 23
+✅ 4. Test the Block Rule
+You can test with tools like telnet or nmap from another system or locally:
+telnet localhost 23
+Expected output: Connection refused or failed.
 
+✅ 5. Add Rule to Allow SSH (Port 22)
+sudo ufw allow ssh
+or explicitly:
+sudo ufw allow 22/tcp
+✅ 6. Remove the Block Rule (Restore State)
+Check the numbered rules:
+sudo ufw status numbered
+Then delete the rule by number (e.g., if it’s rule 3):
+sudo ufw delete 3
+✅ 7. Documented Commands Summary
+sudo ufw enable
+sudo ufw status numbered
+sudo ufw deny 23
+telnet localhost 23       # (to test)
+sudo ufw allow 22/tcp
+sudo ufw delete [rule number]  # remove Telnet block
+✅ 8. Firewall Summary – How UFW Filters Traffic
+UFW acts as a front-end for iptables and applies rules at the kernel level.
+
+It filters incoming and outgoing traffic based on rules.
+
+You define whether to allow or deny connections to ports or IP ranges.
+
+Default behavior: Deny all incoming, allow all outgoing unless specified otherwise.
+
+🔒 Windows (Using Windows Defender Firewall)
+✅ 1. Open Windows Firewall Configuration Tool
+Press Windows + R, type wf.msc, and press Enter.
+
+Or: Go to Control Panel > System and Security > Windows Defender Firewall > Advanced Settings
+
+✅ 2. List Current Rules
+In the left pane, click Inbound Rules.
+
+Scroll through the list to view existing rules.
+
+✅ 3. Block Inbound Port 23 (Telnet)
+In Inbound Rules, click New Rule (right pane).
+
+Select Port, click Next.
+
+Choose TCP, enter 23, click Next.
+
+Choose Block the connection, click Next.
+
+Apply to Domain, Private, Public profiles.
+
+Name the rule "Block Telnet Port 23", click Finish.
+
+✅ 4. Test the Rule
+Open Command Prompt and run:
+telnet localhost 23
+Expected: It fails to connect.
+
+✅ 5. Allow Port 22 (for SSH)
+Repeat New Rule, but this time:
+
+Port: 22
+
+Action: Allow the connection
+
+Name: "Allow SSH Port 22"
+
+✅ 6. Remove the Test Block Rule
+Go to Inbound Rules
+
+Find "Block Telnet Port 23"
+
+Right-click → Delete
+
+✅ 7. Documented GUI Steps Summary
+Task	Steps
+Open Firewall Settings	wf.msc or Control Panel path
+List Rules	View Inbound Rules
+Block Port 23	New Rule → Port → TCP 23 → Block → Apply to all → Name it
+Allow SSH Port 22	New Rule → Port → TCP 22 → Allow → Apply to all → Name it
+Remove Rule	Right-click the rule → Delete
+
+✅ 8. Firewall Summary – How Windows Firewall Filters Traffic
+Uses rules to allow or block network traffic by port, app, protocol, or IP.
+
+Distinguishes between inbound (into the device) and outbound (from the device) traffic.
+
+Applies different rules for Domain, Private, and Public network profiles.
+
+📸 Deliverables to Submit
+Linux: Screenshot of terminal showing:
+
+sudo ufw status numbered
+
+Attempt to connect to blocked port
+
+Windows: Screenshot of:
+
+The new inbound rule for Telnet
+
+Rule list showing the block rule
+
+Test result in Command Prompt (e.g., failed telnet)
